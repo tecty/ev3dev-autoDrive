@@ -21,3 +21,47 @@ gs.mode = 'GYRO-ANG'	# Set gyro mode to return compass angle
 
 # We will need to check EV3 buttons state.
 btn = Button()
+
+#Run the robot until a button is pressed.
+begin = 0
+
+start()
+while not btn.any():
+
+	if begin = 0
+		#hold for 3 seconds.
+		sleep(3)
+		
+		#turn the robot to the left
+		motor_turns(1,1000)
+		
+		begin = 1
+		
+	
+	#If the robot is being pushed, it will fight back.	
+	if(ts1.value() or ts4.value()):
+		motor_reverse()
+		
+	#Ultrasonic sensor will find the enemy 
+	#Measure the distance to the closest object in front of the robot.
+	distance = us.value();
+
+	if distance < 400:
+		#The enemy is in front of the robot.
+		motor_directMove(1000)
+		"""
+		Maybe need a speed up if the robot is close to the enemy.
+		"""
+	else:
+		#The enemy is neither in front of the robot nor at the back.
+		motor_turns(1,1000)
+		sleep(0.5)
+		"""
+		Need codes when direction doesn't change.
+		"""
+
+#Stop the motors before exiting.
+rightMotor.stop()
+leftMotor.stop()		
+
+	
