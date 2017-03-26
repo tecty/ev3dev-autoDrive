@@ -9,6 +9,7 @@ from ev3dev.ev3 import *
 #Connect motors
 rightMotor = LargeMotor(OUTPUT_B)
 leftMotor  = LargeMotor(OUTPUT_C)
+assMotor   = LargeMotor(OUTPUT_A)
 
 # Connect touch sensors.
 ts1 = TouchSensor(INPUT_1);	assert ts1.connected
@@ -33,7 +34,7 @@ while not btn.any():
 		sleep(3)
 		
 		#turn the robot to the left
-		motor_turns(1,1000)
+		motor_turns_start(1,1000)
 		
 		begin = 1
 		
@@ -49,13 +50,14 @@ while not btn.any():
 	if distance < 400:
 		#The enemy is in front of the robot.
 		motor_directMove(1000)
-		"""
-		Maybe need a speed up if the robot is close to the enemy.
-		"""
+		
+	elif distance<50:
+		#The enemy is close to the robot.
+		motor_accelerate(1000)
+		
 	else:
 		#The enemy is neither in front of the robot nor at the back.
 		motor_turns(1,1000)
-		sleep(0.5)
 		"""
 		Need codes when direction doesn't change.
 		"""
