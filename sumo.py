@@ -9,13 +9,12 @@ from ev3dev.ev3 import *
 #Connect motors
 rightMotor = LargeMotor(OUTPUT_B)
 leftMotor  = LargeMotor(OUTPUT_C)
-assMotor   = LargeMotor(OUTPUT_A)
 
 # Connect touch sensors.
-ts1 = TouchSensor(INPUT_1);	assert ts1.connected
-ts4 = TouchSensor(INPUT_4);	assert ts4.connected
-us  = UltrasonicSensor();	assert us.connected
-gs  = GyroSensor();		assert gs.connected
+ts = TouchSensor()			assert ts.connected
+cs = ColorSensor()			assert cs.connected
+us  = UltrasonicSensor()	assert us.connected
+gs  = GyroSensor()			assert gs.connected
 
 gs.mode = 'GYRO-RATE'	# Changing the mode resets the gyro
 gs.mode = 'GYRO-ANG'	# Set gyro mode to return compass angle
@@ -40,7 +39,7 @@ while not btn.any():
 
 
     #If the robot is being pushed, it will fight back.
-    if(ts1.value() or ts4.value()):
+    if(ts.value()):
         motor_reverse()
 
     #Ultrasonic sensor will find the enemy
