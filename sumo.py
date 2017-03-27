@@ -29,41 +29,41 @@ begin = 0
 start()
 while not btn.any():
 
-	if begin = 0
-		#hold for 3 seconds.
-		sleep(3)
-		
-		#turn the robot to the left
-		motor_turns_start(1,1000)
-		
-		begin = 1
-		
-	
-	#If the robot is being pushed, it will fight back.	
-	if(ts1.value() or ts4.value()):
-		motor_reverse()
-		
-	#Ultrasonic sensor will find the enemy 
-	#Measure the distance to the closest object in front of the robot.
-	distance = us.value();
+    if begin = 0
+        #hold for 3 seconds.
+        sleep(3)
 
-	if distance < 400:
-		#The enemy is in front of the robot.
-		motor_directMove(1000)
-		
-	elif distance<50:
-		#The enemy is close to the robot.
-		motor_accelerate(1000)
-		
-	else:
-		#The enemy is neither in front of the robot nor at the back.
-		motor_turns(1,1000)
-		"""
-		Need codes when direction doesn't change.
-		"""
+    #turn the robot to the left
+    motor_turns_start(1,1000)
+
+    begin = 1
+
+
+    #If the robot is being pushed, it will fight back.
+    if(ts1.value() or ts4.value()):
+        motor_reverse()
+
+    #Ultrasonic sensor will find the enemy
+    #Measure the distance to the closest object in front of the robot.
+    distance = us.value();
+
+    if distance < 400:
+        #The enemy is in front of the robot.
+        motor_directMove(1000)
+
+    elif distance<50:
+        #The enemy is close to the robot.
+        motor_accelerate(1000)
+
+    else:
+        #The enemy is neither in front of the robot nor at the back.
+        motor_turns(1,1000)
+        """
+        Need codes when direction doesn't change.
+        """
+
+
 
 #Stop the motors before exiting.
 rightMotor.stop()
-leftMotor.stop()		
-
-	
+leftMotor.stop()
