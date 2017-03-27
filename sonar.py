@@ -5,16 +5,16 @@ us  = UltrasonicSensor();	assert us.connected
 # to store the m
 unlimitDistance=0
 
-def sonar_distance(arg):
-    return us.value;
+def sonar_distance():
+    return us.value
 
-def sonar_isEnermy(arg):
+def sonar_isEnermy():
     # judge if there is enermy
     if unlimitDistance==0:
         #record the max distance
-        unlimitDistance=sonar_distance
+        unlimitDistance=sonar_distance()
     else:
-        if sonar_distance<(distance-5):
+        if sonar_distance()<(unlimitDistance-100):
             # some object in the maxidistance
             return 1
         else:
