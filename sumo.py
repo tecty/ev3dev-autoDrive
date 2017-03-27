@@ -16,7 +16,6 @@ cs = ColorSensor()			assert cs.connected
 us  = UltrasonicSensor()	assert us.connected
 gs  = GyroSensor()			assert gs.connected
 
-gs.mode = 'GYRO-RATE'	# Changing the mode resets the gyro
 gs.mode = 'GYRO-ANG'	# Set gyro mode to return compass angle
 
 # We will need to check EV3 buttons state.
@@ -25,7 +24,6 @@ btn = Button()
 #Run the robot until a button is pressed.
 begin = 0
 
-start()
 while not btn.any():
 
     if begin = 0
