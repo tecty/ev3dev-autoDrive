@@ -2,6 +2,10 @@
 #to use python3 in ev3
 
 from time import sleep
+# import all private modules
+from motor,color,sonar,campus,touch import *
+
+
 import sys, os
 
 from ev3dev.ev3 import *
