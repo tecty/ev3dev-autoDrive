@@ -4,11 +4,15 @@
 rightMotor = LargeMotor(OUTPUT_B)
 leftMotor  = LargeMotor(OUTPUT_C)
 
+def motor_move(leftSpeed=1000,rightSpeed=1000):
+    #basic function to control motors
+    leftMotor.run_forever(leftSpeed)
+    rightMotor.run_forever(rightSpeed)
 
-def motor_directMove(inputSpeed=1000):
+
+def motor_straightMove(inputSpeed=1000):
     #accelerate when approaching near, then input 1000 to get this function
-    leftMotor.run_forever(inputSpeed)
-    rightMotor.run_forever(inputSpeed)
+    motor_move(inputSpeed,inputSpeed)
 
 
 def motor_turnsAngle(angle,inputSpeed=1000):
@@ -23,18 +27,15 @@ def motor_turnsAngle(angle,inputSpeed=1000):
 
 def motor_turns(dir,inputSpeed=1000):
     #dir==1 is right turn
-    leftMotor.run_forever(speed_sp=dir*inputSpeed)
-    rightMotor.run_forever(speed_sp=-dir*inputSpeed)
+    motor_move(dir*inputSpeed,-dir*inputSpeed)
 
 def motor_break():
     #to stop the motor
     leftMotor.stop()
     rightMotor.stop()
     # to make extra sure the motors have stopped:
-    leftMotor.run_forever(speed_sp=0)
-    rightMotor.run_forever(speed_sp=0)
-
+    motor_move(0,0)
 
 def motor_reverse():
-    #run at full speed.
-    motor_accelerate(-1000);
+    #move backward at full speed.
+    motor_move(-1000,-1000)
