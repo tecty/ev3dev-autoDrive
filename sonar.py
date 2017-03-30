@@ -17,5 +17,4 @@ def sonar_isEnermy():
         if sonar_distance()<(unlimitDistance-100):
             # some object in the maxidistance
             return 1
-        else:
-            return 0
+    return 0

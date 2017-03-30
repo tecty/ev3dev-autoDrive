@@ -2,23 +2,25 @@
 # to use python3 in ev3
 
 from time import sleep
+# import all private modules
+from motor,color,sonar,campus,touch import *
+
+
 import sys, os
 
 from ev3dev.ev3 import *
 
 # Connect motors
 rightMotor = LargeMotor(OUTPUT_B)
-leftMotor = LargeMotor(OUTPUT_C)
+
+leftMotor  = LargeMotor(OUTPUT_C)
 
 # Connect touch sensors.
-ts = TouchSensor();	assert ts.connected
-us = UltrasonicSensor();	assert us.connected
-gs = GyroSensor();		assert gs.connected
-cl = ColorSensor(); assert cl.connected
+ts = TouchSensor()			assert ts.connected
+cs = ColorSensor()			assert cs.connected
+us  = UltrasonicSensor()	assert us.connected
+gs  = GyroSensor()			assert gs.connected
 
-cl.mode = 'COL-REFLECT' # Put the color sensor into COL-REFLECT mode to measure reflected light intensity.
-
-gs.mode = 'GYRO-RATE'	# Changing the mode resets the gyro
 gs.mode = 'GYRO-ANG'	# Set gyro mode to return compass angle
 
 # We will need to check EV3 buttons state.
@@ -34,9 +36,9 @@ while not btn.any():
         sleep(3)
 
     begin = 1
-
     # If the robot is being pushed, it will fight back.
     if ts.value():
+
         motor_reverse()
 
     # Ultrasonic sensor will find the enemy
