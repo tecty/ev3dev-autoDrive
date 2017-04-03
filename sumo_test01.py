@@ -54,10 +54,10 @@ def push_enemy():
         run_motor(1000, 1000)
     else:
         run_motor(750, 750)
-begin = False
+
+
 # hold for 3 seconds.
-
-
+begin = False
 def hold_3sec():
     global begin
 
@@ -65,7 +65,7 @@ def hold_3sec():
         sleep(3)
         begin = True
 
-hold_3sec()
+#hold_3sec()
 print("2")
 # Run the robot until a button is pressed.
 while not btn.any():
@@ -98,8 +98,8 @@ while not btn.any():
     else:
         # The enemy is neither in front of the robot nor at the back.
         motor_turns(1,1000)
-    
-    
+
+
         Need codes when direction doesn't change.
         """
 

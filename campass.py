@@ -8,11 +8,10 @@ gs.mode = 'GYRO-RATE'	# Set gyro mode to return compass angle
 def gyro_reset():
     gs.mode = 'GYRO-ANG'
     gs.mode = 'GYRO-RATE'
-	
-	
-def Gyro_isEnemy():
+
+
+def gyro_isEnemy():
 	gyro_reset()
 	while (gs.value() > -10 & gs.value() < 10):
         motor_directMove(1000)
     gyro_reset()
-	

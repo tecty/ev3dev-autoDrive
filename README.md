@@ -18,3 +18,13 @@
     To fully stop the motor
 ### motor_reverse
     to moving backward with full speed
+##sonar.py
+###sonar_distance
+    Return the distance that sonar detected
+###sonar_isEnemy
+    If sonar sensor found an enemy that will return ture.
+##campass.py
+###gyro_reset
+    For resets standard angle
+###gyro_isEnemy
+    If gyro sensor has detected an enermy, return true.
