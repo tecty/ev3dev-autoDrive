@@ -1,13 +1,16 @@
 # initial the var type
 motor =Motor()
 gyro  =Gyro()
+color =Color()
+sonar =Sonar()
 
 
 def initFun():
     #initial the object and connect to the component
     motor.initial()
     gyro.initial()
-
+    color.initial()
+    sonar.initial()
 
 class Motor:
     def initial(self):
@@ -22,8 +25,6 @@ class Motor:
     def straightMove(self,inputSpeed=1000):
         #accelerate when approaching near, then input 1000 to get this function
         self.move(inputSpeed,inputSpeed)
-
-
     def turnsAngle(self,angle,inputSpeed=1000):
         """this funciton is for turning a certain angle"""
         #dir==1 is right turn, angle > 0 is right turn
@@ -59,6 +60,28 @@ class Gyro:
         self.gs.mode = 'GYRO-RATE'
     def isEnemy(self):
     	self.reset()
-    	while (self.gs.value() > -10 & gs.value() < 10):
-            motor.directMove(1000)
-        self.reset()
+    		if (gs.value() > -10 & gs.value() < 10):
+                return 1;
+        return 0;
+class Color:
+    def initial(self, arg):
+        self.cs = ColorSensor();
+        self.cs.mode = 'COL-COLOR' 	#set the color sensor to the COLOR mode
+    def isEdge(self):
+    	if self.cs.value == 1:
+    		return 1
+    	return 0
+class Sonar:
+    def initial(self):
+        #initial the object and set the initialDistance
+        self.us  = UltrasonicSensor()
+        self.initialDistance = self.distance
+    def distance(self):
+        #return the Sonar sensor's value
+        return us.value
+    def isEnemy(self):
+        # judge if there is enermy
+        if self.distance()<(self.initialDistance-100):
+            # some object in the maxidistance
+            return 1
+        return 0
