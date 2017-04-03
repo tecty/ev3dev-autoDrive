@@ -1,10 +1,19 @@
-# initial the var type
+#user/bin/env python3
+
+"""import modules"""
+from time import sleep
+from ev3dev.ev3 import *
+# import sys, os  #useless import
+
+"""initial the var type for component"""
 motor =Motor()
 gyro  =Gyro()
 color =Color()
 sonar =Sonar()
 
-
+"""initial threadLock for safety threading"""
+threadLock=threading.Lock()
+"""initialisation function"""
 def initFun():
     #initial the object and connect to the component
     motor.initial()
@@ -12,6 +21,7 @@ def initFun():
     color.initial()
     sonar.initial()
 
+"""define the classes of component"""
 class Motor:
     def initial(self):
         self.rightMotor = LargeMotor(OUTPUT_B)
@@ -42,7 +52,8 @@ class Motor:
     def break0(self):
         #to stop the motors
         self.leftMotor.stop()
-        self.rightMotor.stop()
+        self.righimport sys, os
+tMotor.stop()
         self.tailMotor.stop()
         # to make extra sure the motors have stopped:
         self.move(0,0,0)
@@ -85,3 +96,13 @@ class Sonar:
             # some object in the maxidistance
             return 1
         return 0
+class initialThread(threading.Thread):
+    # thread for initialising
+    def __init__(self):
+        threading.Thread.__init__(self)
+    def run(self):
+        print ("Start initialising")
+        threadLock.acquire()
+        initFun()
+        threadLock.release()
+        print("Finished initialisation")
