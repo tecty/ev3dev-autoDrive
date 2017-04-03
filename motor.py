@@ -6,8 +6,8 @@ leftMotor  = LargeMotor(OUTPUT_C)
 
 def motor_move(leftSpeed=1000,rightSpeed=1000):
     #basic function to control motors
-    leftMotor.run_forever(leftSpeed)
-    rightMotor.run_forever(rightSpeed)
+    leftMotor.run_forever(speed_sp=leftSpeed)
+    rightMotor.run_forever(speed_sp=rightSpeed)
 
 
 def motor_straightMove(inputSpeed=1000):
