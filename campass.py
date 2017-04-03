@@ -12,6 +12,7 @@ def gyro_reset():
 
 def gyro_isEnemy():
 	gyro_reset()
-	while (gs.value() > -10 & gs.value() < 10):
-        motor_directMove(1000)
-    gyro_reset()
+	if (gs.value() > -10 & gs.value() < 10):
+        return 1;
+    return 0;
+	

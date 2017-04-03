@@ -40,3 +40,10 @@ def motor_break():
 def motor_reverse():
     #move backward at full speed.
     motor_move(-1000,-1000)
+	
+def motor_shrink_back(inputSpeed=750):
+	#move backward for a limited time.
+	leftMotor.run_timed(speed_sp=inputSpeed,time_sp=1000)
+	rightMotor.run_timed(speed_sp=inputSpeed,time_sp=1000)
+	sleep(1)
+	
