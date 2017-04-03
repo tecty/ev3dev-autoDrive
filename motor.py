@@ -3,6 +3,7 @@
 #Connect motors
 rightMotor = LargeMotor(OUTPUT_B)
 leftMotor  = LargeMotor(OUTPUT_C)
+tailMotor  = LargeMotor(OUTPUT_A)
 
 def motor_move(leftSpeed=1000,rightSpeed=1000):
     #basic function to control motors
