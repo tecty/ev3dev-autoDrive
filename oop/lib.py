@@ -34,7 +34,7 @@ class Motor:
         self.tailMotor.run_forever(speed_sp=tailSpeed)
     def straightMove(self,inputSpeed=1000):
         #accelerate when approaching near, then input 1000 to get this function
-        self.move(inputSpeed,inputSpeed)
+        self.move(inputSpeed,inputSpeed,inputSpeed)
     def turnsAngle(self,angle,inputSpeed=1000):
         """this funciton is for turning a certain angle"""
         #dir==1 is right turn, angle > 0 is right turn
@@ -52,8 +52,7 @@ class Motor:
     def break0(self):
         #to stop the motors
         self.leftMotor.stop()
-        self.righimport sys, os
-tMotor.stop()
+        self.righMotor.stop()
         self.tailMotor.stop()
         # to make extra sure the motors have stopped:
         self.move(0,0,0)
