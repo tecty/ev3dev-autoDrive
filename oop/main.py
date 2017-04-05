@@ -1,6 +1,5 @@
 """import the lib that all main program need"""
 from lib import *
-import sys,os
 class mainThread(threading.Thread):
     # main programming in this thread
     def __init__(self):
@@ -8,7 +7,7 @@ class mainThread(threading.Thread):
     def run(self):
         #main programming must hold 3 sec while initialisation
         print ("Start main thread and hold 3 sec")
-        sleep(3)
+        sleep(1)
         while True:
 
             try:

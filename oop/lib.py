@@ -4,7 +4,7 @@
 from time import sleep
 from ev3dev.ev3 import *
 import threading
-# import sys, os  #useless import
+import sys, os  #useless import
 
 
 """define the classes of component"""
@@ -14,6 +14,8 @@ class Motor:
         self.rightMotor = LargeMotor(OUTPUT_B)
         self.leftMotor  = LargeMotor(OUTPUT_C)
         # self.tailMotor  = LargeMotor(OUTPUT_A)
+
+        self.found=0
     def move(self,leftSpeed=1000,rightSpeed=1000,tailSpeed=1000):
         #basic function to control motors
         self.leftMotor.run_forever(speed_sp=leftSpeed)
@@ -39,8 +41,8 @@ class Motor:
 
     def break0(self):
         #to stop the motors
-        self.leftMotor.stop(stop_command='brake')
-        self.righMotor.stop(stop_command='brake')
+        self.leftMotor.stop()
+        self.rightMotor.stop()
         # self.tailMotor.stop(stop_command='brake')
         # to make extra sure the motors have stopped:
         self.move(0,0)
@@ -48,6 +50,17 @@ class Motor:
     def reverse(self):
         #move backward at full speed.
         self.move(-1000,-1000)
+    def findEnemy():
+        if self.found==0:
+            self.turns(1)
+        if self.found!=0:
+            self.turnsAngle(self.found*1000)
+            sleep(1)
+            self.turnsAngle(self.found*-2000)
+            sleep(2)
+
+
+
 class Gyro:
 
     def initial(self):
@@ -83,8 +96,17 @@ class Sonar:
         # judge if there is enermy
         if self.distance()<(self.initialDistance-100):
             # some object in the maxidistance
-            return 1
+            raise EnemyFound()
         return 0
+class Touch:
+    def initial(self):
+        self.ts =  TouchSensor(INPUT_1)
+    def touch_isEnemy(self):
+        # something push the back
+        if self.ts.value():
+            return 1
+
+
 class initialThread(threading.Thread):
     # thread for initialising
     def __init__(self):
@@ -98,13 +120,14 @@ class initialThread(threading.Thread):
 
 
 
+
 #expection classes
 class ButtonPress(Exception):
 	def __init__(self, message):
 		self.message = message
 
 class EnemyFound(Exception):
-	def __init__(self, found):
+	def __init__(self, found=1000):
 		self.value = found
 
 class SidesEnemy(Exception):
@@ -120,6 +143,7 @@ motor =Motor()
 gyro  =Gyro()
 color =Color()
 sonar =Sonar()
+touch =Touch()
 
 btn=Button()
 """initial threadLock for safety threading"""
@@ -131,3 +155,17 @@ def initFun():
     gyro.initial()
     color.initial()
     sonar.initial()
+    touch.initial()
+def expectionSleep(duration):
+
+    while duration>0:
+        sleep(0.1)
+        duration-=0.1
+        if btn.any():
+            raise ButtonPress()
+        if sonar.isEnemy():
+            raise EnemyFound(1000)
+        if gyro.isEnemy():
+            raise SidesEnemy()
+        if touch.isEnemy():
+            raise EnemyFound(-1000)
