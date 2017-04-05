@@ -3,38 +3,25 @@
 """import modules"""
 from time import sleep
 from ev3dev.ev3 import *
+import threading
 # import sys, os  #useless import
 
-"""initial the var type for component"""
-motor =Motor()
-gyro  =Gyro()
-color =Color()
-sonar =Sonar()
-
-"""initial threadLock for safety threading"""
-threadLock=threading.Lock()
-"""initialisation function"""
-def initFun():
-    #initial the object and connect to the component
-    motor.initial()
-    gyro.initial()
-    color.initial()
-    sonar.initial()
 
 """define the classes of component"""
 class Motor:
+
     def initial(self):
         self.rightMotor = LargeMotor(OUTPUT_B)
         self.leftMotor  = LargeMotor(OUTPUT_C)
-        self.tailMotor  = LargeMotor(OUTPUT_A)
+        # self.tailMotor  = LargeMotor(OUTPUT_A)
     def move(self,leftSpeed=1000,rightSpeed=1000,tailSpeed=1000):
         #basic function to control motors
         self.leftMotor.run_forever(speed_sp=leftSpeed)
         self.rightMotor.run_forever(speed_sp=rightSpeed)
-        self.tailMotor.run_forever(speed_sp=tailSpeed)
+        # self.tailMotor.run_forever(speed_sp=-tailSpeed)
     def straightMove(self,inputSpeed=1000):
         #accelerate when approaching near, then input 1000 to get this function
-        self.move(inputSpeed,inputSpeed,inputSpeed)
+        self.move(inputSpeed,inputSpeed)
     def turnsAngle(self,angle,inputSpeed=1000):
         """this funciton is for turning a certain angle"""
         #dir==1 is right turn, angle > 0 is right turn
@@ -42,25 +29,27 @@ class Motor:
             dir=1
         else:
             dir=-1
+        # self.tailMotor.run_forever(speed_sp=0)
         self.leftMotor.run_timed(speed_sp=dir*inputSpeed,time_sp=angle)
         self.rightMotor.run_timed(speed_sp=-dir*inputSpeed,time_sp=angle)
 
     def turns(self,dir,inputSpeed=1000):
         #dir==1 is right turn
-        self.move(dir*inputSpeed,-dir*inputSpeed,0)
+        self.move(dir*inputSpeed,-dir*inputSpeed,500)
 
     def break0(self):
         #to stop the motors
-        self.leftMotor.stop()
-        self.righMotor.stop()
-        self.tailMotor.stop()
+        self.leftMotor.stop(stop_command='brake')
+        self.righMotor.stop(stop_command='brake')
+        # self.tailMotor.stop(stop_command='brake')
         # to make extra sure the motors have stopped:
-        self.move(0,0,0)
+        self.move(0,0)
 
     def reverse(self):
         #move backward at full speed.
-        self.move(-1000,-1000,-1000)`
+        self.move(-1000,-1000)
 class Gyro:
+
     def initial(self):
         self.gs = GyroSensor()
         self.gs.mode = 'GYRO-ANG'	# Changing the mode resets the gyro
@@ -69,12 +58,12 @@ class Gyro:
         self.gs.mode = 'GYRO-ANG'
         self.gs.mode = 'GYRO-RATE'
     def isEnemy(self):
-    	self.reset()
-    		if (gs.value() > -10 & gs.value() < 10):
-                return 1;
-        return 0;
+        self.reset()
+        if (self.gs.value() > -10 and self.gs.value() < 10):
+            return 1
+        return 0
 class Color:
-    def initial(self, arg):
+    def initial(self):
         self.cs = ColorSensor();
         self.cs.mode = 'COL-COLOR' 	#set the color sensor to the COLOR mode
     def isEdge(self):
@@ -82,13 +71,14 @@ class Color:
     		return 1
     	return 0
 class Sonar:
+
     def initial(self):
         #initial the object and set the initialDistance
         self.us  = UltrasonicSensor()
-        self.initialDistance = self.distance
+        self.initialDistance = self.distance()
     def distance(self):
         #return the Sonar sensor's value
-        return us.value
+        return self.us.value()
     def isEnemy(self):
         # judge if there is enermy
         if self.distance()<(self.initialDistance-100):
@@ -105,3 +95,39 @@ class initialThread(threading.Thread):
         initFun()
         threadLock.release()
         print("Finished initialisation")
+
+
+
+#expection classes
+class ButtonPress(Exception):
+	def __init__(self, message):
+		self.message = message
+
+class EnemyFound(Exception):
+	def __init__(self, found):
+		self.value = found
+
+class SidesEnemy(Exception):
+	def __init__(self, side):
+		self.value = side
+
+class DetectRing(Exception):
+	def __init__(self, backforwards):
+		self.value = backforwards
+
+"""initial the var type for component"""
+motor =Motor()
+gyro  =Gyro()
+color =Color()
+sonar =Sonar()
+
+btn=Button()
+"""initial threadLock for safety threading"""
+threadLock=threading.Lock()
+"""initialisation function"""
+def initFun():
+    #initial the object and connect to the component
+    motor.initial()
+    gyro.initial()
+    color.initial()
+    sonar.initial()
