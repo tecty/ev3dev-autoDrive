@@ -1,6 +1,7 @@
+from ev3dev.ev3 import *
 
 #registrate function
-ts = TouchSensor(INPUT_1);	assert ts.connected
+ts = TouchSensor(INPUT_4);	assert ts.connected
 
 
 def touch_isTouch():
